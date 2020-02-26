@@ -28,7 +28,6 @@ public class PostFragment extends PresenterFragment<PostPresenter>
     private RefreshOwner mRefreshOwner;
     private View mErrorView;
     private PostAdapter mPostAdapter;
-
     private PostPresenter mPresenter;
 
     public static PostFragment newInstance(){
@@ -69,6 +68,8 @@ public class PostFragment extends PresenterFragment<PostPresenter>
         mPostAdapter = new PostAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mPostAdapter);
+
+        onRefreshData();
     }
 
     @Override
