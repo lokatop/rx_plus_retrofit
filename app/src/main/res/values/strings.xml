@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">learn_rx_Java</string>
+    <string name="error">Something went wrong. Try again.</string>
+    <string name="separator">by</string>
 </resources>
