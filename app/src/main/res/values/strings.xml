@@ -2,4 +2,9 @@
     <string name="app_name">learn_rx_Java</string>
     <string name="error">Something went wrong. Try again.</string>
     <string name="separator">by</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="post_activity" />
 </resources>
