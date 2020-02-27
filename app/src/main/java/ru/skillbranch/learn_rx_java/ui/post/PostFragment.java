@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,10 +29,13 @@ public class PostFragment extends PresenterFragment<PostPresenter>
     private PostAdapter mPostAdapter;
     private PostPresenter mPresenter;
 
-    public static PostFragment newInstance(){
-        return new PostFragment();
+    public static PostFragment newInstance(Bundle args){
+        PostFragment fragment = new PostFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
+    public static final String POST_KEY = "POST_KEY";
 
     @Override
     public void onAttach(@NonNull Context context) {

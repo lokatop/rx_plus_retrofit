@@ -17,4 +17,9 @@ public class MainPresenter extends BasePresenter {
     public void getTopics(){
         if (topics!=null){mView.showTopics(topics);}
     }
+
+    //Сделано в качестве примера, так как в будущем вряд ли будет использоваться именно такой подход
+    public void openAnyFragment(String name){
+        mView.openAnyFragment(name);
+    }
 }

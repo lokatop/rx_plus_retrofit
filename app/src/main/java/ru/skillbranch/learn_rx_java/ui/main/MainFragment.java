@@ -1,6 +1,7 @@
 package ru.skillbranch.learn_rx_java.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import ru.skillbranch.learn_rx_java.R;
 import ru.skillbranch.learn_rx_java.common.PresenterFragment;
 import ru.skillbranch.learn_rx_java.common.RefreshOwner;
 import ru.skillbranch.learn_rx_java.common.Refreshable;
+import ru.skillbranch.learn_rx_java.ui.post.PostActivity;
+import ru.skillbranch.learn_rx_java.ui.post.PostFragment;
 
 public class MainFragment extends PresenterFragment<MainPresenter>
         implements Refreshable,MainView,MainAdapter.OnItemClickListener {
@@ -104,6 +107,24 @@ public class MainFragment extends PresenterFragment<MainPresenter>
         mMainAdapter.addData(topics, true);
     }
 
+    @Override
+    public void openAnyFragment(@NonNull String name) {
+        Bundle args = new Bundle();
+        Intent intent;
+        switch (name.toLowerCase()){
+            case ("posts"):
+                intent = new Intent(getActivity(), PostActivity.class);
+                args.putString(PostFragment.POST_KEY, name);
+                intent.putExtra(PostActivity.USERNAME_KEY, args);
+                startActivity(intent);
+                break;
+            default:
+                mErrorView.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
+                break;
+        }
+    }
+
     //Вызывается, когда фрагмент отвязывается от активности
     @Override
     public void onDetach() {
@@ -114,5 +135,6 @@ public class MainFragment extends PresenterFragment<MainPresenter>
     @Override
     public void onItemClick(String toast) {
         Toast.makeText(getContext(), toast, Toast.LENGTH_SHORT).show();
+        mPresenter.openAnyFragment(toast);
     }
 }
