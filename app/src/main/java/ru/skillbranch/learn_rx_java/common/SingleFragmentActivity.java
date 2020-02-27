@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -12,10 +13,11 @@ import ru.skillbranch.learn_rx_java.R;
 
 
 public abstract class SingleFragmentActivity extends AppCompatActivity
-        implements SwipeRefreshLayout.OnRefreshListener, RefreshOwner {
+        implements SwipeRefreshLayout.OnRefreshListener, RefreshOwner, OnBackPressedListener {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     protected abstract Fragment getFragment();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +45,25 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
 
         transaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getSupportFragmentManager();
+        OnBackPressedListener backPressedListener = null;
+        for (Fragment fragment: fm.getFragments()) {
+            if (fragment instanceof  OnBackPressedListener) {
+                backPressedListener = (OnBackPressedListener) fragment;
+                break;
+            }
+        }
+
+        if (backPressedListener != null) {
+            backPressedListener.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
     @Override
     public void onRefresh() {

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.skillbranch.learn_rx_java.R;
+import ru.skillbranch.learn_rx_java.common.OnBackPressedListener;
 import ru.skillbranch.learn_rx_java.common.PresenterFragment;
 import ru.skillbranch.learn_rx_java.common.RefreshOwner;
 import ru.skillbranch.learn_rx_java.common.Refreshable;
@@ -23,7 +24,7 @@ import ru.skillbranch.learn_rx_java.ui.post.PostActivity;
 import ru.skillbranch.learn_rx_java.ui.post.PostFragment;
 
 public class MainFragment extends PresenterFragment<MainPresenter>
-        implements Refreshable,MainView,MainAdapter.OnItemClickListener {
+        implements Refreshable,MainView,MainAdapter.OnItemClickListener, OnBackPressedListener {
 
     private RefreshOwner mRefreshOwner;
     private View mErrorView;
@@ -125,6 +126,7 @@ public class MainFragment extends PresenterFragment<MainPresenter>
         }
     }
 
+
     //Вызывается, когда фрагмент отвязывается от активности
     @Override
     public void onDetach() {
@@ -136,5 +138,18 @@ public class MainFragment extends PresenterFragment<MainPresenter>
     public void onItemClick(String toast) {
         Toast.makeText(getContext(), toast, Toast.LENGTH_SHORT).show();
         mPresenter.openAnyFragment(toast);
+    }
+
+    //Тут логика связанная только со View непосредственно
+    //Можно конечно и вынести в презентер, но она больше подходит сюда.
+    @Override
+    public void onBackPressed() {
+        if (mErrorView.getVisibility() == View.VISIBLE){
+            mErrorView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }else {
+            this.getActivity().finish();
+        }
+        //Toast.makeText(getContext(), "Back", Toast.LENGTH_SHORT).show();
     }
 }

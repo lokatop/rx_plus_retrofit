@@ -22,4 +22,7 @@ public class MainPresenter extends BasePresenter {
     public void openAnyFragment(String name){
         mView.openAnyFragment(name);
     }
+
+    public void backPressed(){}
+
 }
